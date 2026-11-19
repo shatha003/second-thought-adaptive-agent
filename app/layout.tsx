@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "An agent that notices when reality changed and safely changes its mind, with a receipt for every revision.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
