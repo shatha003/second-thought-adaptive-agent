@@ -2,7 +2,7 @@
 
 ## AI tools used
 
-- **Claude Code (Claude Sonnet 5.5)** wrote most of this codebase in a pair-programming session with the author: the engine, scenarios, API, UI, tests and docs. The author set the brief, reviewed the design decisions, and owns the result.
+- **Claude Code (Claude Opus 5.5 and Claude Sonnet 5.5)** wrote most of this codebase in a pair-programming session with the author: the engine, scenarios, API, UI, tests and docs. The author set the brief, reviewed the design decisions, and owns the result.
 - **Vercel AI SDK 7** powers the optional language-model planner (`lib/planner/llm.ts`), through the Vercel AI Gateway.
 - The default path uses **no model at all**. The agent's reasoning is deterministic and inspectable, which is deliberate (see below).
 

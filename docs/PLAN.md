@@ -290,6 +290,6 @@ The agents that win won't be the ones that plan best. They'll be the ones that k
 | Demo not obvious in 90s | Side-by-side + scorecard; rehearse Loom against the script |
 
 ## 12. Notes for the submission form
-- **AI tools used**: Claude Code (implementation), Vercel AI SDK + AI Gateway (planner), Cursor/none otherwise. Edit to match reality.
+- **AI tools used**: Claude Code with Claude Opus 5.5 and Claude Sonnet 5.5 (implementation), Vercel AI SDK + AI Gateway (planner).
 - **Key decisions**: assumption ledger as world model; deterministic change detection with LLM only proposing revisions; gate between proposal and adoption; event sourcing.
 - **Out of scope**: real third-party APIs, multi-agent negotiation, learning across runs, auth/multi-tenant.
