@@ -75,7 +75,9 @@ See `.env.example`. `GET /api/health` reports which store and planner are active
 
 ```
 app/                Next.js App Router: UI page and API routes
-components/         Mission-control UI (plan, assumptions, journal, reality, event log)
+components/         The UI, styled as a newspaper proof: plans are manuscripts, assumptions are
+                    footnotes, every change of mind is a printed correction (ink/ holds the
+                    hand-drawn proofreader's marks; newsroom/ holds the live run)
 lib/domain/         Types
 lib/engine/         beliefs, plan evaluation, safety gate, trace, the loop
 lib/planner/        deterministic ranking, optional LLM ranking

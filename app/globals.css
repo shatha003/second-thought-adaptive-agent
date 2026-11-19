@@ -1,40 +1,36 @@
 @import "tailwindcss";
 
 /*
-  Second Thought visual identity: "the departure board".
-  Night-terminal ink, warm paper glyphs, one hot accent (signal orange) reserved for
-  the moment the agent changes its mind. Green and red are semantic only.
-  The identity is dark by design (split-flap boards are lit glyphs on black), so the
-  theme is locked to dark on purpose.
+  Second Thought: "the proof".
+  The agent is an editor proofreading its own plan. The site is a printed newspaper:
+  newsprint, black ink, and two pencils. Red pencil = a change of mind. Blue pencil =
+  a fact that was checked and stands. Nothing else gets colour.
+  Print is a light medium, so the theme is locked to paper on purpose.
 */
 :root {
-  --ink: #090a0f;
-  --ink-2: #10121a;
-  --ink-3: #171a24;
-  --tile: #1d2130;
-  --line: #262b3a;
-  --paper: #efe9dc;
-  --dim: #8a8fa3;
-  --signal: #ff6a2b;
-  --go: #4be3a0;
-  --stop: #ff4867;
-  color-scheme: dark;
+  --paper: #ecebe6;
+  --sheet: #f7f6f2;
+  --ink: #151515;
+  --ink-2: #57554f;
+  --rule: rgb(21 21 21 / 0.16);
+  --red: #d42a1c;
+  --blue: #1f48c9;
+  color-scheme: light;
 }
 
 @theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
   --color-ink: var(--ink);
   --color-ink2: var(--ink-2);
-  --color-ink3: var(--ink-3);
-  --color-tile: var(--tile);
-  --color-line: var(--line);
-  --color-paper: var(--paper);
-  --color-dim: var(--dim);
-  --color-signal: var(--signal);
-  --color-go: var(--go);
-  --color-stop: var(--stop);
-  --font-display: var(--font-shoulders);
-  --font-sans: var(--font-instrument);
-  --font-mono: var(--font-jetbrains);
+  --color-rule: var(--rule);
+  --color-red: var(--red);
+  --color-blue: var(--blue);
+  --font-black: var(--font-blackletter);
+  --font-serif: var(--font-newsreader);
+  --font-hand: var(--font-caveat);
+  --font-type: var(--font-courier);
+  --radius-none: 0;
 }
 
 html {
@@ -42,49 +38,82 @@ html {
 }
 
 body {
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-instrument), system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-newsreader), Georgia, serif;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern", "liga", "onum";
 }
 
-/* Film grain on a fixed, non-scrolling layer (cheap to composite). */
+/* Newsprint fibre: multiply-blended noise on a fixed layer. */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.43 0 0 0 0 0.4 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 ::selection {
-  background: var(--signal);
-  color: var(--ink);
+  background: var(--red);
+  color: var(--sheet);
+}
+
+/* Letterpress: ink sits slightly into the paper. */
+.press {
+  text-shadow: 0 0.5px 0 rgb(21 21 21 / 0.25);
+}
+
+/* Thick-thin newspaper rules */
+.rule-double {
+  border-top: 3px solid var(--ink);
+  box-shadow: 0 3px 0 -2px var(--paper), 0 5px 0 -2px var(--ink);
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-size: 4.4em;
+  line-height: 0.82;
+  padding: 0.06em 0.1em 0 0;
+  font-weight: 800;
+}
+
+/* A proof sheet lying on the desk */
+.sheet {
+  background: var(--sheet);
+  box-shadow:
+    0 1px 0 rgb(21 21 21 / 0.08),
+    0 18px 40px -22px rgb(60 50 30 / 0.45),
+    0 2px 6px rgb(60 50 30 / 0.08);
+}
+
+/* Rubber-stamp ink: uneven coverage */
+.stamp-ink {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+}
+
+/* Ticker tape perforations */
+.tape {
+  background:
+    radial-gradient(circle at 6px 50%, var(--paper) 2.5px, transparent 3px) left / 12px 100% repeat-y,
+    radial-gradient(circle at calc(100% - 6px) 50%, var(--paper) 2.5px, transparent 3px) right / 12px 100% repeat-y,
+    #f3efe2;
+}
+
+.leaders {
+  background-image: radial-gradient(circle, var(--ink-2) 0.8px, transparent 1px);
+  background-size: 7px 3px;
+  background-repeat: repeat-x;
+  background-position: 0 85%;
 }
 
 .scroll-thin {
   scrollbar-width: thin;
-  scrollbar-color: var(--line) transparent;
-}
-
-/* Split-flap tile: the hinge line and the subtle top/bottom shading of a real flap. */
-.flap-tile {
-  background: linear-gradient(180deg, #232838 0%, #1d2130 49.5%, #151824 50.5%, #1a1e2b 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 1px 0 rgb(0 0 0 / 0.6);
-}
-.flap-tile::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: rgb(0 0 0 / 0.55);
-  pointer-events: none;
+  scrollbar-color: var(--rule) transparent;
 }
 
 @keyframes blink {
@@ -93,34 +122,7 @@ body::after {
   }
 }
 .caret {
-  animation: blink 1s steps(1) infinite;
-}
-
-@keyframes lamp-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 0 5px transparent;
-  }
-}
-.lamp-live {
-  animation: lamp-pulse 1.6s ease-out infinite;
-}
-
-@keyframes ripple {
-  from {
-    transform: translate(-50%, -50%) scale(0.4);
-    opacity: 0.9;
-  }
-  to {
-    transform: translate(-50%, -50%) scale(3.2);
-    opacity: 0;
-  }
-}
-.ripple {
-  animation: ripple 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: blink 0.9s steps(1) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
