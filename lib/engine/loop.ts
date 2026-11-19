@@ -468,7 +468,7 @@ export function humanApprove(run: RunState, laneId: Lane["id"]): RunEvent[] {
   const scn = getScenario(run.scenarioId);
   const lane = run.lanes.find((l) => l.id === laneId);
   const events: RunEvent[] = [];
-  if (!lane?.escalation?.optionId) return events;
+  if (run.status === "finished" || !lane?.escalation?.optionId) return events; // the decision window closes when the run ends
   const emit: Emit = (l, type, message, level) => events.push({ seq: ++run.eventSeq, tick: run.tick, lane: l, type, message, level });
   const a = lane.assumptions.find((x) => x.id === lane.escalation!.assumptionId);
   if (!a) return events;

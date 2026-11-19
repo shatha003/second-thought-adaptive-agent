@@ -4,7 +4,7 @@
 
 Most agents either never notice that the world moved under their plan, or re-plan on a timer and break things that were fine. Second Thought tracks what each step of its plan *depends on*, and revises only when a signal contradicts one of those assumptions. Every revision passes a safety gate and leaves a plain-language trace: *"I changed my mind because hotel-feed (95%) contradicted 'Hotel Alfama still has our room'."*
 
-- **Live demo:** LIVE_URL
+- **Live demo:** https://second-thought-adaptive-agent.vercel.app
 - **Architecture:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - **Failure test (adaptation goes wrong, and is contained):** [docs/FAILURE-TEST.md](docs/FAILURE-TEST.md)
 - **Two-year thesis:** [docs/THESIS.md](docs/THESIS.md)
@@ -44,7 +44,7 @@ No database or API keys are needed: without `DATABASE_URL` it uses an in-memory 
 Other commands:
 
 ```bash
-npm test                      # 24 tests covering the engine, scenarios and store
+npm test                      # 25 tests covering the engine, scenarios and store
 npm run typecheck && npm run lint
 npm run simulate lisbon       # headless run, prints the decisions (also: fulfilment, phantom; add -v for every tick)
 npm run build && npm start
@@ -55,7 +55,7 @@ npm run build && npm start
 | Variable | Purpose |
 |---|---|
 | `DATABASE_URL` (or `POSTGRES_URL`) | Neon Postgres connection string. Tables are created on first use. Needed in production so runs survive across serverless instances |
-| `AI_GATEWAY_API_KEY` (or Vercel OIDC) | Enables the optional language-model planner, which ranks the same grounded options. Falls back to deterministic on any error |
+| `AI_GATEWAY_API_KEY` (or Vercel OIDC) | Enables the optional language-model planner, which ranks the same grounded options. Falls back to deterministic on any error (including a Vercel AI Gateway account without a card on file), and the journal labels which planner actually decided |
 | `AI_MODEL` | Gateway model id for the LLM planner (default `anthropic/claude-sonnet-4.5`) |
 
 See `.env.example`. `GET /api/health` reports which store and planner are active.

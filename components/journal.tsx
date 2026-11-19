@@ -195,7 +195,7 @@ export function Journal({
                 );
               }
               if (e.kind === "escalation" && e.revision) {
-                const active = lane.status === "holding" && lane.escalation && e.id === lastEscalation?.id;
+                const active = lane.status === "holding" && !lane.score && lane.escalation && e.id === lastEscalation?.id;
                 return (
                   <Frame key={e.id} entry={e} tone="border-bad" label="Level 4 · Escalated to a human" icon={<Hand size={14} weight="fill" className="text-bad" />}>
                     <RevisionBody r={e.revision} currency={currency} />

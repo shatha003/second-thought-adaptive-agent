@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { humanApprove } from "@/lib/engine/loop";
 import { lane, runToEnd } from "./helpers";
 
 describe("Scenario A: Keynote to Lisbon", () => {
@@ -109,5 +110,14 @@ describe("Event-driven injection", () => {
     const a = lane(run, "adaptive");
     expect(run.world.some((w) => w.injected)).toBe(true);
     expect(a.journal.some((j) => /LH1234/.test(j.headline) && j.tick === 4)).toBe(true);
+  });
+});
+
+describe("late approval", () => {
+  it("is ignored once the run has finished", async () => {
+    const { run } = await runToEnd("phantom");
+    const before = JSON.stringify(run.lanes.find((l) => l.id === "adaptive"));
+    expect(humanApprove(run, "adaptive")).toEqual([]);
+    expect(JSON.stringify(run.lanes.find((l) => l.id === "adaptive"))).toBe(before);
   });
 });
